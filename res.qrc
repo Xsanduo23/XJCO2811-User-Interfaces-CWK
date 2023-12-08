@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>open.jpg</file>
+        <file>kuaijin.jpg</file>
+        <file>soundclose.jpg</file>
+        <file>stop.jpg</file>
+        <file>all.jpg</file>
+        <file>tishi.jpg</file>
+        <file>stop.png</file>
+        <file>sound.png</file>
+        <file>start.png</file>
+        <file>houtui.jpg</file>
+        <file>touxiang.jpg</file>
+    </qresource>
+</RCC>
