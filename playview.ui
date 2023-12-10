@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>playView</class>
+ <widget class="QWidget" name="playView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>719</width>
+    <height>940</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(41, 41, 43);</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>2</number>
+   </property>
+   <property name="leftMargin">
+    <number>2</number>
+   </property>
+   <property name="topMargin">
+    <number>2</number>
+   </property>
+   <property name="rightMargin">
+    <number>2</number>
+   </property>
+   <property name="bottomMargin">
+    <number>2</number>
+   </property>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="4,1,6">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QWidget" name="widget" native="true">
+       <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+      </widget>
+     </item>
+     <item>
+      <widget class="QWidget" name="widget_2" native="true"/>
+     </item>
+     <item>
+      <widget class="mytable" name="tableWidget"/>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>mytable</class>
+   <extends>QTableWidget</extends>
+   <header>mytable.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
