@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>417</width>
-    <height>51</height>
+    <width>468</width>
+    <height>104</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="3,2">
+    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="4,2">
      <property name="spacing">
       <number>7</number>
      </property>
@@ -39,6 +39,13 @@
        <property name="spacing">
         <number>7</number>
        </property>
+       <item>
+        <widget class="QWidget" name="widget_show" native="true">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 85, 0);</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
@@ -95,6 +102,9 @@ font: 10pt &quot;Microsoft YaHei UI&quot;;</string>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <property name="spacing">
         <number>7</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
        </property>
        <item>
         <widget class="QToolButton" name="toolButton_cellplay">
