@@ -14,18 +14,16 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mytable.cpp \
-    playview.cpp \
-    tableitem.cpp
+    videolist.cpp \
+    videowindow.cpp
 
 HEADERS += \
-    mytable.h \
-    playview.h \
-    tableitem.h
+    videolist.h \
+    videowindow.h
 
 FORMS += \
-    playview.ui \
-    tableitem.ui
+    videolist.ui \
+    videowindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
