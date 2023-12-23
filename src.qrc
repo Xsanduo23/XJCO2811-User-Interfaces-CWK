@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/photo.png</file>
+        <file>img/send.png</file>
+        <file>music/cancel.wav</file>
+        <file>music/Windows close.wav</file>
+        <file>music/Windows Foreground.wav</file>
+        <file>music/Windows open.wav</file>
+        <file>img/logo.png</file>
+        <file>img/24gf-volumeDisable.png</file>
+        <file>img/24gf-volumeHigh.png</file>
+        <file>img/24gl-playlistVideo.png</file>
+        <file>img/aixin.png</file>
+        <file>img/aixin1.png</file>
+        <file>img/aixin2.png</file>
+        <file>img/backward-full.png</file>
+        <file>img/bofang.png</file>
+        <file>img/bofang1.png</file>
+        <file>img/exitfullscreen.png</file>
+        <file>img/fullscreen.png</file>
+        <file>img/go-full.png</file>
+        <file>img/next-full.png</file>
+        <file>img/prev-full.png</file>
+        <file>img/wenjianjia.png</file>
+        <file>img/zanting.png</file>
+    </qresource>
+</RCC>
