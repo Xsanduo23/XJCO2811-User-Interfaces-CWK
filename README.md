@@ -3,7 +3,7 @@
 <div align="center">
    <h3 >-XJCO2811-User-Interfaces-CWK-</h3>
 </div>
-  
+
 <div align="center">
 <img src="https://github.com/LinZY37/XJCO2811-User-Interfaces-CWK/assets/126498872/9edd932a-d6ec-438d-84db-5ad69c1d2e79" width="500" height="300">
 </div>
@@ -43,3 +43,11 @@ Our team's program is a video player based on qt5.15.2, which supports Windows/m
 11. Screenshot: After selecting the fourth button in topbar, you can select the screenshot function. After taking a screenshot, you can take a screenshot of the interface and save the picture to the local. 
 12. Video Preview: When the mouse moves over the playlist. The selected video will be shown in a small window to give viewers a preview of the effect. 
 13. Responsive: The program is designed to fit any size. When the interface is too wide, the playlist will move from the bottom to the right, click the list button on the far right of the menu, and the playlist will pop up from the right, which is to adapt to the tablet size.
+
+### How to run
+
+- Download the zip file of the entire project, unzip and open the zip file.
+- Download the QT Creator IDE and QT 5.15.2 from the QT website.
+- Complete the QT 5.15.2 configuration in QT Creator(consider setting some initial internationalisation language options here).
+- Open the project and open the.pro file in the folder to build the project.
+- Click the Play button, and you'll get the software running.
