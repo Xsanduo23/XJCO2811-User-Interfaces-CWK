@@ -22,7 +22,6 @@
 namespace Ui {
 class videowindow;
 }
-
 class videowindow : public QMainWindow
 {
     Q_OBJECT
@@ -77,7 +76,7 @@ private:
     QPushButton *btn_file_op = nullptr;
     QPushButton *btn_last = nullptr;
     QPushButton *btn_volume = nullptr;
-    QPushButton *space = nullptr;
+    QPushButton *FAQ = nullptr;
     QPushButton *btn_screen_full = nullptr;
     QPushButton *btn_forward = nullptr;
     QWidget *btn_list = nullptr; // Control center
@@ -108,11 +107,7 @@ private:
     bool ishide = true;
     video_list *list;
 
-signals:
-    void nomalscreen();
-    void fullscreen();
 
-private:
     QMenu *background_list;
     QMenu *speed_list;
     QMenu *speed_list_item;
@@ -133,6 +128,20 @@ private:
     void upper_menu_connections();
     void processSelectedDirectory(const QString &directory);
     void Volumeadjust(QString path);
+
+    enum FavoriteStatus {
+        NotFavorite,
+        Favorite
+    };
+
+
+    FavoriteStatus favoriteStatus = NotFavorite;
+
+signals:
+    void nomalscreen();
+    void fullscreen();
+
+
 };
 
 #endif // VIDEOWINDOW_H

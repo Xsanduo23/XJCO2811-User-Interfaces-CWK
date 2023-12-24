@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>playView</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="mainwindow">
    <property name="styleSheet">
     <string notr="true">background-color: rgb(41, 41, 43);</string>
    </property>
@@ -39,7 +39,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QWidget" name="widget" native="true">
+       <widget class="QWidget" name="play_container" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <property name="spacing">
           <number>2</number>
@@ -60,7 +60,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="widget_2" native="true">
+       <widget class="QWidget" name="menu_container" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="spacing">
           <number>1</number>
@@ -81,7 +81,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="widget_4" native="true"/>
+       <widget class="QWidget" name="list_container" native="true"/>
       </item>
      </layout>
     </item>
@@ -93,7 +93,7 @@
      <x>0</x>
      <y>0</y>
      <width>719</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

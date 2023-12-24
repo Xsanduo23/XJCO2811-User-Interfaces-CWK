@@ -31,7 +31,6 @@ signals:
 namespace Ui {
 class list_widget;
 }
-
 class list_widget : public QWidget
 {
     Q_OBJECT

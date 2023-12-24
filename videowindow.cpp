@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include <QColorDialog>
 #include <QDateTime>
+#include <QMessageBox>
 int i =0;
 
 // Constructor for the 'videowindow' class.
@@ -50,8 +51,8 @@ videowindow::videowindow(QWidget *parent) :
         }
     });
 
-    // Set the fixed height for 'widget_2'
-    ui->widget_2->setFixedHeight(120);
+    // Set the fixed height for 'menu_container'
+    ui->menu_container->setFixedHeight(120);
 
     // Disable dragging of the initial progress bar
     slider_video->setEnabled(false);
@@ -66,7 +67,7 @@ videowindow::videowindow(QWidget *parent) :
         i++;
         if (i > 3) {
             // Adjust the volume and stop the timer
-            Volumeadjust(":/music/Windows open.wav");
+            Volumeadjust(":/music/start.wav");
             timer->stop();
         }
     });
@@ -90,36 +91,43 @@ videowindow::~videowindow()
 
 void videowindow::init_widget()
 {
-    btn_list = new QWidget(ui->widget_2);
-    btn_list->resize(ui->widget_2->size());
+    // Create a container for buttons
+    btn_list = new QWidget(ui->menu_container);
+    btn_list->resize(ui->menu_container->size());
 
+    // Initialize a label for time display
     time = new QLabel("00:00/00:00");
     time->setStyleSheet("color:white");
 
-    btn_screen_full = new QPushButton();
-    btn_config(btn_screen_full,QSize(this->width()*0.04,this->width()*0.04),":/img/fullscreen.png");
-    btn_file_op = new QPushButton();
-    btn_config(btn_file_op,QSize(this->width()*0.05,this->width()*0.05),":/img/wenjianjia.png");
-    btn_back = new QPushButton();
-    btn_config(btn_back,QSize(this->width()*0.04,this->width()*0.04),":/img/backward-full.png");
-    btn_forward = new QPushButton();
-    btn_config(btn_forward,QSize(this->width()*0.04,this->width()*0.04),":/img/go-full.png");
+    // Array of button information
+    struct ButtonInfo {
+        QPushButton** btn;
+        double sizeFactor;
+        const char* imagePath;
+    };
 
-    btn_play = new QPushButton();
-    btn_config(btn_play,QSize(this->width()*0.039,this->width()*0.039),":/img/zanting.png");
-    space = new QPushButton("");
-    btn_config(space,QSize(this->width()*0.07,this->width()*0.07),"");
-    space->setStyleSheet("");
-    btn_last = new QPushButton();
-    btn_config(btn_last,QSize(this->width()*0.06,this->width()*0.06),":/img/prev-full.png");
-    btn_next = new QPushButton();
-    btn_config(btn_next,QSize(this->width()*0.06,this->width()*0.06),":/img/next-full.png");
-    btn_volume = new QPushButton();
-    btn_volume->setObjectName("yes");
-    btn_config(btn_volume,QSize(this->width()*0.05,this->width()*0.05),":/img/24gf-volumeHigh.png");
-    btn_record = new QPushButton();
-    btn_record->setObjectName("yes");
-    btn_config(btn_record,QSize(this->width()*0.05,this->width()*0.05),":/img/24gl-playlistVideo.png");
+    ButtonInfo buttons[] = {
+        {&btn_screen_full, 0.04, ":/img/fullscreen.png"},
+        {&btn_file_op, 0.05, ":/img/wenjianjia.png"},
+        {&btn_back, 0.04, ":/img/backward-full.png"},
+        {&btn_forward, 0.04, ":/img/go-full.png"},
+        {&btn_play, 0.039, ":/img/zanting.png"},
+        {&FAQ, 0.05, ":/img/FAQ.png"},
+        {&btn_last, 0.06, ":/img/prev-full.png"},
+        {&btn_next, 0.06, ":/img/next-full.png"},
+        {&btn_volume, 0.05, ":/img/24gf-volumeHigh.png"},
+        {&btn_record, 0.05, ":/img/24gl-playlistVideo.png"}
+    };
+
+    // Initialize buttons using a loop
+    for (auto& button : buttons) {
+        *button.btn = new QPushButton();
+        btn_config(*button.btn, QSize(this->width() * button.sizeFactor, this->width() * button.sizeFactor), button.imagePath);
+        (*button.btn)->setObjectName("yes");
+    }
+
+    // Additional configurations
+    FAQ->setStyleSheet("");
 
     slider_volume = new QSlider(this);
     slider_volume->resize(15,10);
@@ -130,40 +138,37 @@ void videowindow::init_widget()
     slider_volume->setMinimumWidth(70);
     slider_volume->setMaximumWidth(100);
 
+    // 假设 btn_file_op, FAQ, btn_back, ... btn_record 已经被创建
+    QWidget *leftWidgets[] = { btn_file_op, FAQ };
+    QWidget *centerWidgets[] = { btn_back, btn_last, btn_play, btn_next, btn_forward };
+    QWidget *rightWidgets[] = { btn_screen_full, btn_volume, slider_volume, btn_record };
+
     QHBoxLayout *hlayout = new QHBoxLayout();
-    QSpacerItem *spacer1 = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding);
-    QSpacerItem *spacer2 = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Expanding);
 
+    // 添加左侧部件
+    for (QWidget *widget : leftWidgets) {
+        hlayout->addWidget(widget);
+    }
 
-    hlayout->addWidget(btn_file_op);
-    hlayout->addWidget(space);
-    hlayout->addSpacerItem(spacer1);
-    hlayout->addWidget(btn_back);
-    hlayout->addWidget(btn_last);
-    hlayout->addWidget(btn_play);
-    hlayout->addWidget(btn_next);
-    hlayout->addWidget(btn_forward);
-    hlayout->addWidget(btn_screen_full);
-    hlayout->addSpacerItem(spacer2);
-    hlayout->addWidget(btn_volume);
-    hlayout->addWidget(slider_volume);
-    hlayout->addWidget(btn_record);
-    hlayout->setStretch(0, 1);
-    hlayout->setStretch(1, 2);
-    hlayout->setStretch(2, 7);
-    hlayout->setStretch(3, 1);
-    hlayout->setStretch(4, 1);
-    hlayout->setStretch(5, 1);
-    hlayout->setStretch(6, 1);
-    hlayout->setStretch(7, 1);
-    hlayout->setStretch(8, 1);
-    hlayout->setStretch(9, 6);
-    hlayout->setStretch(10, 1);
-    hlayout->setStretch(11, 3);
-    hlayout->setStretch(12,1);
+    // 添加第一个扩展空白项将按钮推向中间
+    hlayout->addSpacerItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+
+    // 添加中间的按钮
+    for (QWidget *widget : centerWidgets) {
+        hlayout->addWidget(widget);
+    }
+
+    // 添加第二个扩展空白项
+    hlayout->addSpacerItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+
+    // 添加右侧部件
+    for (QWidget *widget : rightWidgets) {
+        hlayout->addWidget(widget);
+    }
+
     hlayout->setSpacing(0);
 
-    QVBoxLayout *vlayout = new QVBoxLayout(btn_list);
+
 
     slider_video = new QSlider();
     slider_video->setMaximum(500);
@@ -245,10 +250,12 @@ void videowindow::init_widget()
     hlayout1->addWidget(time);
     hlayout1->addWidget(slider_video);
 
+    QVBoxLayout *vlayout = new QVBoxLayout(btn_list);
+
     vlayout->addLayout(hlayout1);
     vlayout->addLayout(hlayout);
 
-    btn_list->resize(ui->widget_2->size());
+    btn_list->resize(ui->menu_container->size());
     createRecordList();
     list_init();
     btn_list->show();
@@ -365,7 +372,7 @@ void videowindow::init_widget()
     // This connection handles the visibility and animation of the record list.
 
     connect(btn_record, &QPushButton::clicked, this, [=]() {
-        if (!ui->widget_4->isVisible()) {
+        if (!ui->list_container->isVisible()) {
             // Show the record list
             record_list->show();
 
@@ -492,29 +499,47 @@ void videowindow::init_widget()
     });
 
 
-    // Connect a slot to the 'clicked' signal of the 'space' button.
+    // Connect a slot to the 'clicked' signal of the 'FAQ' button.
     // This connection handles the functionality of toggling the playback mode between playlist loop and current item in loop.
 
-    connect(space, &QPushButton::clicked, this, [=]() {
-        if (space->text() == "") {
-            // Clear the button text and icon, set the playback mode to playlist loop
-            space->setText("");
-            btn_config(space, QSize(15, 15), "");
-            video_bar->setPlaybackMode(QMediaPlaylist::Loop);
+    connect(FAQ, &QPushButton::clicked, this, [=]() {
+        // 创建一个对话框
+        QMessageBox *instructionBox = new QMessageBox(this);
 
-            // Additional code to execute under the 'if' condition
-            qDebug() << "Button clicked, executing the 'if' block";
-        } else {
-            // Clear the button text and icon, set the playback mode to current item in loop
-            space->setText("");
-            btn_config(space, QSize(15, 15), "");
-            video_bar->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
+        // 设置对话框的样式表，包括背景颜色和文本颜色
+        instructionBox->setStyleSheet("QMessageBox { background-color: black; color: white; }"
+                                      "QLabel { color: white; }"
+                                      "QPushButton { color: black; }");
 
-            // Additional code to execute under the 'else' condition
-            qDebug() << "Button clicked, executing the 'else' block";
-        }
+        // 设置对话框的大小
+        instructionBox->setFixedSize(400, 200);
 
-        // You can add additional operations under each condition as needed
+        // 设置对话框的字体
+        QFont font;
+        font.setFamily("Arial");
+        font.setPointSize(12);
+        instructionBox->setFont(font);
+
+        // 设置对话框标题
+        instructionBox->setWindowTitle("Instructions");
+
+        // 设置对话框显示的文本
+        instructionBox->setText("CineSync Leeds is a video player based on qt5.15.2, "
+                                "which supports Windows/mac os, linux to play wmv/mp4, MOV format video. "
+                                "The interface of a video consists of a playarea, a menu and a playlist. "
+                                "Video functions include pause play, fast forward and backward, switch up and down video, sound adjustment, "
+                                "switch full screen, double speed playback, like, screenshot, customize the interface background color, "
+                                "switch language. At the same time, the program interface meets the needs of adaptive, suitable for any screen size."
+                                "\n\nSystem Requirement:\n"  // 小标题
+                                "1. Windows 10/11, macOS, Linux\n"  // 系统要求列表
+                                "2. At least 4GB of RAM");  // 更多要求
+
+        // 设置对话框的标准按钮为自定义文本
+        instructionBox->setStandardButtons(QMessageBox::Ok);
+        instructionBox->button(QMessageBox::Ok)->setText("Confirm");
+
+        // 显示对话框
+        instructionBox->show();
     });
 
 
@@ -557,16 +582,16 @@ void videowindow::init_widget()
     connect(btn_screen_full, &QPushButton::clicked, this, [=]() {
         if (!isfull) {
             // Enter full-screen mode
-            ui->widget_4->hide(); // Hide a specific widget
+            ui->list_container->hide(); // Hide a specific widget
             this->showFullScreen(); // Show the main window in full-screen mode
             btn_screen_full->setIcon(QIcon(":/img/exitfullscreen.png")); // Set button icon to exit full-screen
             isfull = 1; // Update the full-screen state flag
         } else {
             // Exit full-screen mode
             this->showNormal(); // Show the main window in normal mode
-            ui->widget_2->show(); // Show a specific widget
+            ui->menu_container->show(); // Show a specific widget
             if (this->width() < this->height()) {
-                ui->widget_4->show(); // Show another widget if certain conditions are met
+                ui->list_container->show(); // Show another widget if certain conditions are met
             }
             this->resize(this->width(), this->height() + 1); // Resize the window
             this->resize(this->width(), this->height() - 1); // Resize the window
@@ -614,11 +639,11 @@ void videowindow::initializeMediaPlayer()
 void videowindow::initializeWidget()
 {
     // Create a video widget and set it as the video output for the media player
-    widget_item = new QVideoWidget(ui->widget);
+    widget_item = new QVideoWidget(ui->play_container);
     play_area->setVideoOutput(widget_item);
 
     // Resize the video widget to match the size of the parent widget 'ui->widget'
-    widget_item->resize(ui->widget->size());
+    widget_item->resize(ui->play_container->size());
 
     // Initialize the visibility of interface elements
     updateWidgetVisibility();
@@ -630,11 +655,11 @@ void videowindow::updateWidgetVisibility()
     QString currentPlayerName = currentMedia.canonicalUrl().fileName();
     if (currentPlayerName.contains("mp3"))
     {
-        ui->widget->hide();
+        ui->play_container->hide();
     }
     else
     {
-        ui->widget->show();
+        ui->play_container->show();
     }
 }
 
@@ -716,8 +741,8 @@ void videowindow::list_init()
         }
     });
 
-    // Create a QVBoxLayout and add the video list to the 'ui->widget_4'
-    QVBoxLayout *layout = new QVBoxLayout(ui->widget_4);
+    // Create a QVBoxLayout and add the video list to the 'ui->list_container'
+    QVBoxLayout *layout = new QVBoxLayout(ui->list_container);
     layout->addWidget(list);
 }
 
@@ -942,13 +967,13 @@ void videowindow::data_setting(QTableWidget* list)
 
 void videowindow::button_responsive()
 {
-    if(ui->widget_4->isVisible())
+    if(ui->list_container->isVisible())
     {
         btn_file_op->setIconSize(QSize(this->width()*0.05,this->width()*0.05));
         btn_back->setIconSize(QSize(this->width()*0.05,this->width()*0.05));
         btn_forward->setIconSize(QSize(this->width()*0.05,this->width()*0.05));
         btn_record->setIconSize(QSize(this->width()*0.05,this->width()*0.05));
-        space->setIconSize(QSize(this->width()*0.05,this->width()*0.05));
+        FAQ->setIconSize(QSize(this->width()*0.05,this->width()*0.05));
         btn_volume->setIconSize(QSize(this->width()*0.05,this->width()*0.05));
         btn_play->setIconSize(QSize(this->width()*0.052,this->width()*0.052));
         btn_next->setIconSize(QSize(this->width()*0.06,this->width()*0.06));
@@ -964,8 +989,8 @@ void videowindow::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 
     // Resize the video playback area and control center
-    widget_item->resize(ui->widget->size());
-    btn_list->resize(ui->widget_2->size());
+    widget_item->resize(ui->play_container->size());
+    btn_list->resize(ui->menu_container->size());
 
     // Resize and hide the playback queue
     record_list->resize(this->width() * 0.3, this->height());
@@ -973,9 +998,9 @@ void videowindow::resizeEvent(QResizeEvent *event)
 
     // Show/hide the control panel based on window width and height
     if (this->width() > this->height()) {
-        ui->widget_4->hide();
+        ui->list_container->hide();
     } else {
-        ui->widget_4->show();
+        ui->list_container->show();
     }
 
     // Adjust button icon sizes
@@ -989,7 +1014,7 @@ void videowindow::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
     {
-        if (ui->widget_2->isVisible())
+        if (ui->menu_container->isVisible())
         {
             // Enter fullscreen mode
             toggleFullScreen(true);
@@ -1009,16 +1034,16 @@ void videowindow::toggleFullScreen(bool fullScreen)
 {
     if (fullScreen)
     {
-        ui->widget_2->hide();
-        ui->widget_4->hide();
+        ui->menu_container->hide();
+        ui->list_container->hide();
         this->showFullScreen();
     }
     else
     {
         this->showNormal();
-        ui->widget_2->show();
+        ui->menu_container->show();
         if (this->width() < this->height())
-            ui->widget_4->show();
+            ui->list_container->show();
         this->resize(this->width(), this->height() + 1);
         this->resize(this->width(), this->height() - 1);
     }
@@ -1078,167 +1103,4 @@ void videowindow::initBorderVideoLabels()
 
 
 
-
-void videowindow::init_upper_border()
-{
-    upper_menu();
-    upper_menu_connections();
-}
-
-void videowindow:: upper_menu()
-{
-    menu_bar = new QMenuBar(this);
-    this->setMenuBar(menu_bar);
-    language_list = new QMenu("Language",menu_bar);
-    background_list = new QMenu("Background",menu_bar);
-    speed_list_item = new QMenu("Speed",menu_bar);//Build menu bar options
-    speed_list = new QMenu("...",menu_bar);//Build menu bar options
-
-    chinese = new QAction("Chinese");
-    english = new QAction("English");
-    custom = new QAction("DIY");
-
-    like = new QAction(QIcon(":/img/aixin.png"),"Like");
-    picture = new QAction(QIcon(":/img/photo.png"),"Screen Photo");
-
-    halfspeed = new QAction("0.5 speed");
-    onespeed = new QAction("1 speed");
-    twospeed = new QAction("2 speed");
-
-    language_list->addAction(chinese);
-    language_list->addSeparator();
-    language_list->addAction(english);
-    language_list->addSeparator();
-
-    background_list->addAction(custom);
-
-    speed_list->addSeparator();
-    speed_list->addAction(like);//Adds a function to the menu bar elective
-    speed_list->addSeparator();//separator
-    speed_list->addAction(picture);//Adds a function to the menu bar elective
-    speed_list->addSeparator();//separator
-
-    speed_list_item->addAction(halfspeed);
-    speed_list_item->addAction(onespeed);
-    speed_list_item->addAction(twospeed);
-
-    menu_bar->addMenu(language_list);//Adds menu bar options to the menu bar
-    menu_bar->addMenu(background_list);
-    menu_bar->addMenu(speed_list_item);
-    menu_bar->addMenu(speed_list);
-
-    menu_bar->show();
-
-    menu_bar->setStyleSheet("QMenu {"
-                            "color:black;"
-                            "background-color:white;"
-                            "border-radius:3px;"
-                            "padding:5px;"
-                            "margin:6px;"
-                            "}"
-                            "QMenu::item:text {"
-                            "font-size:15px;"
-                            "padding-left:10px;"
-                            "padding-right:10px;"
-                            "}"
-                            "QMenu::item:selected {"
-                            "color:#1aa3ff;"
-                            "background-color: #e5f5ff;"
-                            "border-radius:3px;"
-                            "}"
-                            "QMenu::separator {"
-                            "height:1px;"
-                            "background:#bbbbbb;"
-                            "margin:5px;"
-                            "margin-left:10px;"
-                            "margin-right:10px;"
-                            "}");
-
-
-}
-
-void videowindow:: upper_menu_connections()
-{
-    connect(custom,&QAction::triggered,this,[=](){
-        QColor color = QColorDialog::getColor(Qt::white, this);
-        if(!color.isValid()){
-        }
-        else {
-            ui->centralwidget->setStyleSheet("background-color: "+ color.name()+ ";");
-        }
-    });
-    connect(like,&QAction::triggered,this,[=](){
-        if(whetherfavorite==0){
-            qDebug()<<"ok";
-            whetherfavorite = 1;
-            like->setIcon(QIcon(":/img/aixin2.png"));
-        }
-        else{
-            whetherfavorite = 0;
-            like->setIcon(QIcon(":/img/aixin.png"));
-        }
-    });
-    connect(picture,&QAction::triggered,this,[=](){
-        QString filePath = QFileDialog::getSaveFileName(
-            this,
-            tr("Save screenshot"),
-            "",
-            tr("JPEG Files (*.jpg);;PNG Files (*.png)"));
-        if (!filePath.isEmpty()) {
-            QPixmap screenshot = ui->centralwidget->grab();  // screenshot
-            screenshot.save(filePath, Q_NULLPTR, 100);  // Save the screenshot and set the quality parameter to 100
-        }
-    });
-    connect(halfspeed,&QAction::triggered,this,[=](){
-        play_area->setPlaybackRate(0.5);
-    });
-    connect(onespeed,&QAction::triggered,this,[=](){
-        play_area->setPlaybackRate(1.0);
-    });
-    connect(twospeed,&QAction::triggered,this,[=](){
-        play_area->setPlaybackRate(2.0);
-    });
-    connect(english,&QAction::triggered,this,[=](){
-        language_list->setTitle("Language");
-        background_list->setTitle("Background");
-        speed_list_item->setTitle("Speed");
-        chinese->setText("Chinese");
-        english->setText("English");
-        custom->setText("DIY");
-        like->setText("Like");
-        picture->setText("Screen Photo");
-        halfspeed->setText("0.5 speed");
-        onespeed->setText("1.0 speed");
-        twospeed->setText("2.0 speed");
-        bordervideo->setText("loacal Playing：");
-        list->setTitle("Play List");
-        item_list->setTitle("Play List");
-        list_name->setText("Play History");
-    });
-    connect(chinese,&QAction::triggered,this,[=](){
-        language_list->setTitle("语言");
-        background_list->setTitle("背景");
-        speed_list_item->setTitle("倍速");
-        chinese->setText("中文");
-        english->setText("英文");
-        custom->setText("自定义");
-        like->setText("收藏");
-        picture->setText("截图");
-        halfspeed->setText("0.5倍速");
-        onespeed->setText("1倍速");
-        twospeed->setText("2倍速");
-        bordervideo->setText("播放：");
-        list->setTitle("播放列表");
-        item_list->setTitle("播放历史");
-        list_name->setText("播放历史");
-    });
-}
-
-void videowindow::Volumeadjust(QString path)
-{
-    QSoundEffect *soundEffect = new QSoundEffect();
-    soundEffect->setSource(QUrl::fromLocalFile(path));
-    soundEffect->setVolume(1.0);
-    soundEffect->play();
-}
 

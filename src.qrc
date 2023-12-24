@@ -2,10 +2,7 @@
     <qresource prefix="/">
         <file>img/photo.png</file>
         <file>img/send.png</file>
-        <file>music/cancel.wav</file>
-        <file>music/Windows close.wav</file>
-        <file>music/Windows Foreground.wav</file>
-        <file>music/Windows open.wav</file>
+        <file>music/start.wav</file>
         <file>img/logo.png</file>
         <file>img/24gf-volumeDisable.png</file>
         <file>img/24gf-volumeHigh.png</file>
@@ -23,5 +20,6 @@
         <file>img/prev-full.png</file>
         <file>img/wenjianjia.png</file>
         <file>img/zanting.png</file>
+        <file>img/FAQ.png</file>
     </qresource>
 </RCC>

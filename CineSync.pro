@@ -1,3 +1,4 @@
+
 QT       += core gui
 QT +=multimedia
 QT +=multimediawidgets
@@ -14,6 +15,7 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    upperMenu.cpp \
     videolist.cpp \
     videowindow.cpp
 

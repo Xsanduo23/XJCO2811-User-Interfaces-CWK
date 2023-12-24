@@ -124,30 +124,30 @@ list_widget::list_widget(QWidget *parent) :
     ui->setupUi(this);
     initwindow();
     this->setStyleSheet("background-color: transparent;");
-    ui->cellplayButton->hide();
-    ui->likeButton->installEventFilter(this);
-    ui->likeButton->setObjectName("unlike");
+    ui->list_play_ui->hide();
+    ui->favorite_btn_ui->installEventFilter(this);
+    ui->favorite_btn_ui->setObjectName("unlike");
 
-    connect(ui->likeButton, &QToolButton::clicked, this, &list_widget::toggleLike);
-    connect(ui->cellplayButton, &QToolButton::clicked, this, &list_widget::playVideo);
+    connect(ui->favorite_btn_ui, &QToolButton::clicked, this, &list_widget::toggleLike);
+    connect(ui->list_play_ui, &QToolButton::clicked, this, &list_widget::playVideo);
 }
 void list_widget::enterEvent(QEvent *event)
 {
     // Enter event handler for the 'list_widget' class.
     // This method is called when the mouse cursor enters the widget.
-    // It checks the object name of the widget and shows the 'cellplayButton' if it matches "movelisttableitem".
+    // It checks the object name of the widget and shows the 'list_play_ui' if it matches "movelisttableitem".
     // Additionally, it starts playing the video using the 'play_area' when the cursor enters the widget.
 
     // Check if the object name of the widget is "movelisttableitem"
     if(this->objectName()=="movelisttableitem")
     {
-        // Show the 'cellplayButton'
-        ui->cellplayButton->show();
+        // Show the 'list_play_ui'
+        ui->list_play_ui->show();
     }
     else
     {
-        // Show the 'cellplayButton'
-        ui->cellplayButton->show();
+        // Show the 'list_play_ui'
+        ui->list_play_ui->show();
     }
 
     // Start playing the video using the 'play_area'
@@ -163,21 +163,21 @@ void list_widget::toggleLike()
     // and emits the 'favorite_cancel' signal to indicate that the video should be removed from favorites.
 
     // Check if the current object name is not "like"
-    if (ui->likeButton->objectName() != "like")
+    if (ui->favorite_btn_ui->objectName() != "like")
     {
         // Set the icon to a filled heart
-        ui->likeButton->setIcon(QIcon(":/img/aixin2.png"));
+        ui->favorite_btn_ui->setIcon(QIcon(":/img/aixin2.png"));
         // Change the object name to "like"
-        ui->likeButton->setObjectName("like");
+        ui->favorite_btn_ui->setObjectName("like");
         // Emit the 'favorite_add' signal
         emit favorite_add();
     }
     else
     {
         // Set the icon to an empty heart
-        ui->likeButton->setIcon(QIcon(":/img/aixin.png"));
+        ui->favorite_btn_ui->setIcon(QIcon(":/img/aixin.png"));
         // Change the object name to "unlike"
-        ui->likeButton->setObjectName("unlike");
+        ui->favorite_btn_ui->setObjectName("unlike");
         // Emit the 'favorite_cancel' signal
         emit favorite_cancel();
     }
@@ -192,40 +192,40 @@ void list_widget::playVideo()
 bool list_widget::eventFilter(QObject *object, QEvent *event)
 {
     // Event filter for the 'list_widget' class.
-    // This method filters and handles events for the 'likeButton' widget.
+    // This method filters and handles events for the 'favorite_btn_ui' widget.
     // When the mouse enters the button area, it performs scaling by changing the icon and size.
     // When the mouse leaves the button area, it restores the original icon and size.
 
-    // Check if the object is the 'likeButton'
-    if (object == ui->likeButton)
+    // Check if the object is the 'favorite_btn_ui'
+    if (object == ui->favorite_btn_ui)
     {
         // Check if the event type is "Enter" (mouse enters the button area)
         if (event->type() == QEvent::Enter)
         {
             // Mouse enters the button area, perform scaling
-            if (ui->likeButton->objectName() != "like")
+            if (ui->favorite_btn_ui->objectName() != "like")
             {
                 // Change the icon to a filled heart
-                ui->likeButton->setIcon(QIcon(":/img/aixin1.png"));
+                ui->favorite_btn_ui->setIcon(QIcon(":/img/aixin1.png"));
             }
             // Set the new icon size
-            ui->likeButton->setIconSize(QSize(30, 30));
+            ui->favorite_btn_ui->setIconSize(QSize(30, 30));
         }
         // Check if the event type is "Leave" (mouse leaves the button area)
         else if (event->type() == QEvent::Leave)
         {
-            if (ui->likeButton->objectName() != "like")
+            if (ui->favorite_btn_ui->objectName() != "like")
             {
                 // Change the icon to an empty heart
-                ui->likeButton->setIcon(QIcon(":/img/aixin.png"));
+                ui->favorite_btn_ui->setIcon(QIcon(":/img/aixin.png"));
             }
             else
             {
                 // Change the icon to a filled heart
-                ui->likeButton->setIcon(QIcon(":/img/aixin2.png"));
+                ui->favorite_btn_ui->setIcon(QIcon(":/img/aixin2.png"));
             }
             // Mouse leaves the button area, restore the original size
-            ui->likeButton->setIconSize(QSize(20, 20));
+            ui->favorite_btn_ui->setIconSize(QSize(20, 20));
         }
     }
     // Pass the event to the base class
@@ -235,19 +235,19 @@ void list_widget::leaveEvent(QEvent *event)
 {
     // Leave event handler for the 'list_widget' class.
     // This method is called when the mouse cursor leaves the widget.
-    // It checks the object name of the widget and hides the 'cellplayButton' if it matches "movelisttableitem".
+    // It checks the object name of the widget and hides the 'list_play_ui' if it matches "movelisttableitem".
     // Additionally, it pauses the video playback using the 'play_area' when the cursor leaves the widget.
 
     // Check if the object name of the widget is "movelisttableitem"
     if(this->objectName()=="movelisttableitem")
     {
-        // Hide the 'cellplayButton'
-        ui->cellplayButton->hide();
+        // Hide the 'list_play_ui'
+        ui->list_play_ui->hide();
     }
     else
     {
-        // Hide the 'cellplayButton'
-        ui->cellplayButton->hide();
+        // Hide the 'list_play_ui'
+        ui->list_play_ui->hide();
     }
 
     // Pause the video playback using the 'play_area'
@@ -261,7 +261,7 @@ void list_widget::resizeEvent(QResizeEvent *event)
 }
 void list_widget::is_like(QString name)
 {
-    ui->likeButton->setObjectName(name);
+    ui->favorite_btn_ui->setObjectName(name);
 }
 void list_widget::name_setting(QString thisname)
 {
@@ -275,7 +275,7 @@ list_widget::~list_widget()
 
 QString list_widget::txt_catch()
 {
-    return ui->label->text();
+    return ui->list_info_ui->text();
 }
 void list_widget::txt_setting(QString text)
 {
@@ -284,7 +284,7 @@ void list_widget::txt_setting(QString text)
     // and initiates playback. It also calculates a new position for the video and sets it before pausing.
 
     // Set the text of the 'label' widget
-    ui->label->setText(text);
+    ui->list_info_ui->setText(text);
 
     // Set the media URL for the 'play_area' (video player)
     play_area->setMedia(QUrl(text));
@@ -304,13 +304,13 @@ void list_widget::txt_setting(QString text)
 
 void list_widget::icon_setting(QIcon icon)
 {
-    ui->likeButton->setIcon(icon);
+    ui->favorite_btn_ui->setIcon(icon);
     myicon = icon;
 }
 
 void list_widget::favorite_setting(QSize size)
 {
-    ui->likeButton->setIconSize(size);
+    ui->favorite_btn_ui->setIconSize(size);
 }
 void list_widget::initwindow()
 {

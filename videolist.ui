@@ -30,12 +30,12 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="4,0,2">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="4,0,2">
      <property name="spacing">
       <number>7</number>
      </property>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="horizontalLayout_left">
        <property name="spacing">
         <number>7</number>
        </property>
@@ -63,7 +63,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="list_info_ui">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -75,14 +75,14 @@
 font: 10pt &quot;Microsoft YaHei UI&quot;;</string>
          </property>
          <property name="text">
-          <string>123456</string>
+          <string/>
          </property>
         </widget>
        </item>
       </layout>
      </item>
      <item>
-      <widget class="QToolButton" name="likeButton">
+      <widget class="QToolButton" name="favorite_btn_ui">
        <property name="text">
         <string/>
        </property>
@@ -99,7 +99,7 @@ font: 10pt &quot;Microsoft YaHei UI&quot;;</string>
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout_right">
        <property name="spacing">
         <number>7</number>
        </property>
@@ -107,7 +107,7 @@ font: 10pt &quot;Microsoft YaHei UI&quot;;</string>
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
        <item>
-        <widget class="QToolButton" name="cellplayButton">
+        <widget class="QToolButton" name="list_play_ui">
          <property name="text">
           <string>...</string>
          </property>
