@@ -61,8 +61,7 @@ public:
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     void toggleFullScreen(bool fullScreen);
-    void leaveEvent(QEvent *event) override;
-    void enterEvent(QEvent *event) override;
+
     void resizeEvent(QResizeEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
 

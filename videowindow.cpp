@@ -5,6 +5,7 @@
 #include <QSpacerItem>
 #include <QTimer>
 #include <qDebug>
+#include <QToolButton>
 #include <QFile>
 #include <QDir>
 #include <QFileDialog>
@@ -107,14 +108,14 @@ void videowindow::init_widget()
     };
 
     ButtonInfo buttons[] = {
-        {&btn_screen_full, 0.04, ":/img/fullscreen.png"},
+        {&btn_screen_full, 0.05, ":/img/fullscreen.png"},
         {&btn_file_op, 0.05, ":/img/wenjianjia.png"},
-        {&btn_back, 0.04, ":/img/backward-full.png"},
-        {&btn_forward, 0.04, ":/img/go-full.png"},
-        {&btn_play, 0.039, ":/img/zanting.png"},
+        {&btn_back, 0.05, ":/img/backward-full.png"},
+        {&btn_forward, 0.05, ":/img/go-full.png"},
+        {&btn_play, 0.05, ":/img/zanting.png"},
         {&FAQ, 0.05, ":/img/FAQ.png"},
-        {&btn_last, 0.06, ":/img/prev-full.png"},
-        {&btn_next, 0.06, ":/img/next-full.png"},
+        {&btn_last, 0.05, ":/img/prev-full.png"},
+        {&btn_next, 0.05, ":/img/next-full.png"},
         {&btn_volume, 0.05, ":/img/24gf-volumeHigh.png"},
         {&btn_record, 0.05, ":/img/24gl-playlistVideo.png"}
     };
@@ -122,7 +123,10 @@ void videowindow::init_widget()
     // Initialize buttons using a loop
     for (auto& button : buttons) {
         *button.btn = new QPushButton();
-        btn_config(*button.btn, QSize(this->width() * button.sizeFactor, this->width() * button.sizeFactor), button.imagePath);
+        (*button.btn)->setFlat(true);
+        (*button.btn)->resize(QSize(this->width() * button.sizeFactor + 10, this->width() * button.sizeFactor + 10));
+        (*button.btn)->setIcon(QIcon(button.imagePath));
+        (*button.btn)->setIconSize(QSize(this->width() * button.sizeFactor + 10, this->width() * button.sizeFactor + 10));
         (*button.btn)->setObjectName("yes");
     }
 
@@ -130,57 +134,46 @@ void videowindow::init_widget()
     FAQ->setStyleSheet("");
 
     slider_volume = new QSlider(this);
-    slider_volume->resize(15,10);
-    slider_volume->setMaximum(100);
-    slider_volume->setPageStep(10);
+    slider_volume->setValue(30);
+    slider_volume->setPageStep(1);
+    slider_volume->resize(10,10);
     slider_volume->setOrientation(Qt::Horizontal);
-    slider_volume->setValue(20);
-    slider_volume->setMinimumWidth(70);
+    slider_volume->setMinimumWidth(30);
     slider_volume->setMaximumWidth(100);
 
-    // 假设 btn_file_op, FAQ, btn_back, ... btn_record 已经被创建
+    // Assume that btn_file_op, FAQ, btn_back,... btn_record has been created
     QWidget *leftWidgets[] = { btn_file_op, FAQ };
     QWidget *centerWidgets[] = { btn_back, btn_last, btn_play, btn_next, btn_forward };
     QWidget *rightWidgets[] = { btn_screen_full, btn_volume, slider_volume, btn_record };
 
-    QHBoxLayout *hlayout = new QHBoxLayout();
+    QHBoxLayout *first_layout = new QHBoxLayout();
 
-    // 添加左侧部件
+    // Add left component
     for (QWidget *widget : leftWidgets) {
-        hlayout->addWidget(widget);
+        first_layout->addWidget(widget);
     }
 
-    // 添加第一个扩展空白项将按钮推向中间
-    hlayout->addSpacerItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    // Adding the first extended blank item pushes the button to the center
+    first_layout->addSpacerItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
-    // 添加中间的按钮
+    // Add the middle button
     for (QWidget *widget : centerWidgets) {
-        hlayout->addWidget(widget);
+        first_layout->addWidget(widget);
     }
 
-    // 添加第二个扩展空白项
-    hlayout->addSpacerItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    // Add a second extension blank item
+    first_layout->addSpacerItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
-    // 添加右侧部件
+    // Add the right component
     for (QWidget *widget : rightWidgets) {
-        hlayout->addWidget(widget);
+        first_layout->addWidget(widget);
     }
 
-    hlayout->setSpacing(0);
+    first_layout->setSpacing(0);
 
 
 
     slider_video = new QSlider();
-    slider_video->setMaximum(500);
-    slider_video->setPageStep(10);
-    slider_video->setOrientation(Qt::Horizontal);
-
-    slider_video = new QSlider();
-    slider_video->setMaximum(500);
-    slider_video->setPageStep(10);
-    slider_video->setOrientation(Qt::Horizontal);
-
-
     slider_video->setStyleSheet(        "QSlider::sub-page:horizontal {"
                                 "    margin-bottom: 8px;"
                                 "    background: rgb(90, 49, 255);"
@@ -245,15 +238,18 @@ void videowindow::init_widget()
                                  "    margin-bottom: 4px;"
                                  "    background: rgb(193, 204, 208);"
                                  "}");
+    slider_video->setMaximum(300);
+    slider_video->setPageStep(1);
+    slider_video->setOrientation(Qt::Horizontal);
 
-    QHBoxLayout *hlayout1 = new QHBoxLayout();
-    hlayout1->addWidget(time);
-    hlayout1->addWidget(slider_video);
+    QHBoxLayout *layout_t = new QHBoxLayout();
+    layout_t->addWidget(time);
+    layout_t->addWidget(slider_video);
 
-    QVBoxLayout *vlayout = new QVBoxLayout(btn_list);
+    QVBoxLayout *layout_list = new QVBoxLayout(btn_list);
 
-    vlayout->addLayout(hlayout1);
-    vlayout->addLayout(hlayout);
+    layout_list->addLayout(layout_t);
+    layout_list->addLayout(first_layout);
 
     btn_list->resize(ui->menu_container->size());
     createRecordList();
@@ -301,20 +297,25 @@ void videowindow::init_widget()
     connect(btn_play, &QPushButton::clicked, this, [=]() {
         if (play_area->state() != QMediaPlayer::PlayingState) {
             // Start playback, update the button icon to 'pause', and log a message
-            btn_config(btn_play, QSize(btn_play->iconSize()), ":/img/zanting.png");
             play_area->play();
             qDebug() << "start";
+            btn_play->resize(QSize(btn_play->iconSize()));
+            btn_play->setIcon(QIcon(":/img/zanting.png"));
+            btn_play->setIconSize(QSize(btn_play->iconSize()));
         } else {
-            // Pause playback, update the button icon to 'play', and log a message
-            btn_config(btn_play, QSize(btn_play->iconSize()), ":/img/bofang.png");
             play_area->pause();
             qDebug() << "stop";
+            // Pause playback, update the button icon to 'play', and log a message
+            btn_play->resize(QSize(btn_play->iconSize()));
+            btn_play->setIcon(QIcon(":/img/bofang.png"));
+            btn_play->setIconSize(QSize(btn_play->iconSize()));
+
         }
     });
 
+
     // Connect slots to the 'sliderMoved' and 'sliderReleased' signals of 'slider_video'.
     // These connections handle user interactions with the video playback progress slider.
-
     // When the slider is moved, stop the timer for updating playback progress,
     // set the media player's position based on the slider value, and log a message.
     connect(slider_video, &QSlider::sliderMoved, this, [=]() {
@@ -337,14 +338,16 @@ void videowindow::init_widget()
         if (btn_volume->objectName() != "yes") {
             // Toggle the volume button state to "yes" and set the volume and slider value
             btn_volume->setObjectName("yes"); // Enable volume
+            btn_volume->resize(QSize(btn_volume->iconSize()));
+            btn_volume->setIcon(QIcon(":/img/24gf-volumeHigh.png"));
             play_area->setVolume(value_volume); // Set volume value
             slider_volume->setValue(value_volume); // Set slider position
-            btn_config(btn_volume, QSize(btn_volume->iconSize()), ":/img/24gf-volumeHigh.png"); // Set button icon
             qDebug() << "Volume enabled, value: " << value_volume;
         } else {
             // Toggle the volume button state to "no" and set the slider value to 0, while updating the button icon
-            btn_volume->setObjectName("no"); // Disable volume
-            btn_config(btn_volume, QSize(btn_volume->iconSize()), ":/img/24gf-volumeDisable.png"); // Set button icon
+            btn_volume->setObjectName("no"); // Disable volume            
+            btn_volume->resize(QSize(btn_volume->iconSize()));
+            btn_volume->setIcon(QIcon(":/img/24gf-volumeDisable.png"));
             slider_volume->setValue(0); // Set slider position to mute
             qDebug() << "Volume disabled";
         }
@@ -602,6 +605,38 @@ void videowindow::init_widget()
 
 }
 
+// Get the list of media files in the specified directory and store their URLs.
+void videowindow::get_url(const QString &directory)
+{
+    // Create a QDir object for the specified directory
+    QDir dir(directory);
+
+    // Create a QStringList to store file filters based on the operating system
+    QStringList filters;
+
+// Use preprocessor directives to distinguish different operating systems
+#if defined(_WIN32)
+    filters << "*.wmv";
+#else
+    filters << "*.mp4" << "*.mov";
+#endif
+
+    // Get the list of files in the directory that match the specified filters
+    QStringList files = dir.entryList(filters, QDir::Files);
+
+    // Iterate through the list of files
+    foreach (const QString &file, files) {
+        // Create a file URL from the local file path
+        QUrl fileUrl = QUrl::fromLocalFile(dir.filePath(file));
+
+        // Debug print the file path
+        qDebug() << dir.filePath(file);
+
+        // Store the file URL in the 'array_url' QVector
+        array_url.push_back(fileUrl.toString());
+    }
+}
+
 void videowindow::initwindow()
 {
     initializePlaylists();
@@ -610,7 +645,6 @@ void videowindow::initwindow()
 }
 
 // Initialize media playlists for video and list items in the videowindow.
-
 void videowindow::initializePlaylists()
 {
     // Create media playlists for video and list items
@@ -627,11 +661,12 @@ void videowindow::initializePlaylists()
         updateWidgetVisibility();
     });
 }
+
 void videowindow::initializeMediaPlayer()
 {
     play_area = new QMediaPlayer();
-    play_area->setVolume(20);
     play_area->setPlaylist(list_bar);
+    play_area->setVolume(30);
 }
 
 // Initialize the video widget and set its visibility in the videowindow.
@@ -663,12 +698,11 @@ void videowindow::updateWidgetVisibility()
     }
 }
 
-
 void videowindow::createRecordList()
 {
     record_list = new QWidget(this);
     record_list->resize(this->width() * 0.33, this->height());
-    record_list->setMaximumWidth(400);
+    record_list->setMaximumWidth(500);
     record_list->setStyleSheet("background-color: rgb(41, 41, 43);");
     record_list->hide();
 
@@ -676,21 +710,19 @@ void videowindow::createRecordList()
     Animation_setting->setEasingCurve(QEasingCurve::InOutSine);
     Animation_setting->setDuration(150);
 
+    QVBoxLayout *layout = new QVBoxLayout(record_list);
     list_name = new QLabel("Play History");
-    list_name->setStyleSheet("color: rgb(255, 255, 255); font: 700 20pt 'Source Han Sans', 'Noto Sans CJK', '微软雅黑', Arial");
-
+    list_name->setStyleSheet("color: rgb(255, 255, 255); "
+                             "font: 700 20pt 'Source Han Sans', 'Noto Sans CJK', '微软雅黑', Arial");
+    layout->addWidget(list_name);
     item_list = new video_list();
     connect(item_list, &QTableWidget::cellDoubleClicked, this, &videowindow::connectCellDoubleClick);
-
-    QVBoxLayout *movelayout = new QVBoxLayout(record_list);
-    movelayout->addWidget(list_name);
-    movelayout->addWidget(item_list);
-    movelayout->setStretch(0, 1);
-    movelayout->setStretch(1, 8);
+    layout->addWidget(item_list);
+    layout->setStretch(0, 1);
+    layout->setStretch(1, 7);
 }
 
 // Connect to a cell's double-click event in the video list.
-
 void videowindow::connectCellDoubleClick(int i, int j)
 {
     // Get the widget in the specified cell (row 'i', column 'j')
@@ -714,7 +746,6 @@ void videowindow::connectCellDoubleClick(int i, int j)
 
 
 // Initialize the video list and connect a slot to handle cell double-click events.
-
 void videowindow::list_init()
 {
     // Create a new video list
@@ -746,73 +777,50 @@ void videowindow::list_init()
     layout->addWidget(list);
 }
 
-void videowindow::btn_config(QPushButton *btn, QSize size, QString iconpath)
-{
-    btn->setFlat(true);
-    btn->resize(size);
-    btn->setIcon(QIcon(iconpath));
-    btn->setIconSize(btn->size());
-}
-
 // Configure the URL and media playback for the videowindow.
-
 void videowindow::url_config(QString path)
 {
-    // Iterate through the video playlist to find the media file
-    bool hasFile = false;
-    int current = 0;
-    for (int i = 0; i < video_bar->mediaCount(); ++i) {
-        QMediaContent media = video_bar->media(i);
-        QUrl url = media.canonicalUrl();
-        QString fileName = url.fileName();
-        if (fileName == QUrl(path).fileName()) {
-            hasFile = true;
-            current = i;
-            break;
+    // Function to find the index of a media file in a playlist
+    auto findMediaIndex = [](QMediaPlaylist* playlist, const QString& path) -> int {
+        for (int i = 0; i < playlist->mediaCount(); ++i) {
+            QMediaContent media = playlist->media(i);
+            QUrl url = media.canonicalUrl();
+            if (url.fileName() == QUrl(path).fileName()) {
+                return i;
+            }
         }
-    }
+        return -1;
+    };
 
-    if (hasFile) {
-        // Set the current index to the found media file
-        video_bar->setCurrentIndex(current);
-    } else {
-        // Add the media file to the playlist and set it as the current item
+    // Find the index of the media file in video_bar playlist
+    int videoIndex = findMediaIndex(video_bar, path);
+
+    if (videoIndex == -1) {
+        // Media file not found in video_bar playlist, add it
         video_bar->addMedia(QUrl(path));
-        video_bar->setCurrentIndex(video_bar->mediaCount() - 1);
+        videoIndex = video_bar->mediaCount() - 1;
 
-        // Set the status bar with the media file path
-        bordervideopath->setText(QString("%1").arg(path));
-
-        // Add the data associated with the media file
+        // Set status bar and add data
+        bordervideopath->setText(path);
         add_data(path);
     }
 
-    // Iterate through the list playlist to find the media file
-    for (int i = 0; i < list_bar->mediaCount(); ++i) {
-        QMediaContent media = list_bar->media(i);
-        QUrl url = media.canonicalUrl();
-        QString fileName = url.fileName();
-        if (fileName == QUrl(path).fileName()) {
-            hasFile = true;
-            current = i;
-            break;
-        }
-    }
+    // Set the current index in video_bar playlist
+    video_bar->setCurrentIndex(videoIndex);
 
-    // Set the current index in the list playlist
-    list_bar->setCurrentIndex(current);
+    // Find the index of the media file in list_bar playlist
+    int listIndex = findMediaIndex(list_bar, path);
 
-    // Start playback
+    // Set the current index in list_bar playlist
+    list_bar->setCurrentIndex(listIndex);
+
+    // Start playback and enable progress bar
     play_area->play();
-
-    // Enable the progress bar when playing
-    if (slider_video->isEnabled() == false)
-        slider_video->setEnabled(true);
+    slider_video->setEnabled(true);
 
     // Set the progress bar for continuous updating
     updataslider->start(200);
 }
-
 
 
 void videowindow::get_data(QString path)
@@ -880,14 +888,14 @@ void videowindow::add_data(QString name)
 
 list_widget* videowindow::createListWidget(const QString& name, int row)
 {
-    list_widget* item = new list_widget();
-    item->name_setting("moveitem_listitem");
-    item->txt_setting(name);
-    item->favorite_setting(QSize(20, 20));
-    item->resize(item_list->width(), item_list->columnWidth(row));
-    item->icon_setting(QIcon(":/img/aixin.png"));
-    item->is_like("unlike");
-    return item;
+    list_widget* this_list = new list_widget();
+    this_list->name_setting("moveitem_listitem");
+    this_list->txt_setting(name);
+    this_list->favorite_setting(QSize(20, 20));
+    this_list->resize(item_list->width(), item_list->columnWidth(row));
+    this_list->icon_setting(QIcon(":/img/aixin.png"));
+    this_list->is_like("unlike");
+    return this_list;
 }
 
 void videowindow::connectItemSignals(list_widget* item)
@@ -895,41 +903,6 @@ void videowindow::connectItemSignals(list_widget* item)
     connect(item, &list_widget::video_play, this, [=]() {
         this->url_config(item->txt_catch());
     });
-}
-
-
-
-// Get the list of media files in the specified directory and store their URLs.
-
-void videowindow::get_url(const QString &directory)
-{
-    // Create a QDir object for the specified directory
-    QDir dir(directory);
-
-    // Create a QStringList to store file filters based on the operating system
-    QStringList filters;
-
-    // Use preprocessor directives to distinguish different operating systems
-#if defined(_WIN32)
-    filters << "*.wmv";
-#else
-    filters << "*.mp4" << "*.mov";
-#endif
-
-    // Get the list of files in the directory that match the specified filters
-    QStringList files = dir.entryList(filters, QDir::Files);
-
-    // Iterate through the list of files
-    foreach (const QString &file, files) {
-        // Create a file URL from the local file path
-        QUrl fileUrl = QUrl::fromLocalFile(dir.filePath(file));
-
-        // Debug print the file path
-        qDebug() << dir.filePath(file);
-
-        // Store the file URL in the 'array_url' QVector
-        array_url.push_back(fileUrl.toString());
-    }
 }
 
 // Set up data and populate the provided QTableWidget with media items.
@@ -950,51 +923,23 @@ void videowindow::data_setting(QTableWidget* list)
         list->setRowHeight(i, 100);
 
         // Create a list_widget item with the media URL and row index
-        list_widget* item = createListWidget(array_url.at(i), i);
+        list_widget* this_list = createListWidget(array_url.at(i), i);
 
         // Set the list_widget item as a cell widget in the list
-        list->setCellWidget(i, 0, item);
+        list->setCellWidget(i, 0, this_list);
 
         // Add the media to the playback list
         list_bar->addMedia(QUrl(array_url.at(i)));
 
         // Connect signals and slots for the list_widget item
-        connectItemSignals(item);
-    }
-}
-
-
-
-void videowindow::button_responsive()
-{
-    if(ui->list_container->isVisible())
-    {
-        btn_file_op->setIconSize(QSize(this->width()*0.05,this->width()*0.05));
-        btn_back->setIconSize(QSize(this->width()*0.05,this->width()*0.05));
-        btn_forward->setIconSize(QSize(this->width()*0.05,this->width()*0.05));
-        btn_record->setIconSize(QSize(this->width()*0.05,this->width()*0.05));
-        FAQ->setIconSize(QSize(this->width()*0.05,this->width()*0.05));
-        btn_volume->setIconSize(QSize(this->width()*0.05,this->width()*0.05));
-        btn_play->setIconSize(QSize(this->width()*0.052,this->width()*0.052));
-        btn_next->setIconSize(QSize(this->width()*0.06,this->width()*0.06));
-        btn_last->setIconSize(QSize(this->width()*0.06,this->width()*0.06));
-        btn_screen_full->setIconSize(QSize(this->width()*0.04,this->width()*0.04));
+        connectItemSignals(this_list);
     }
 }
 
 // Resize event handler for adjusting the window and its components.
-
 void videowindow::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
-
-    // Resize the video playback area and control center
-    widget_item->resize(ui->play_container->size());
-    btn_list->resize(ui->menu_container->size());
-
-    // Resize and hide the playback queue
-    record_list->resize(this->width() * 0.3, this->height());
-    record_list->hide();
 
     // Show/hide the control panel based on window width and height
     if (this->width() > this->height()) {
@@ -1003,31 +948,55 @@ void videowindow::resizeEvent(QResizeEvent *event)
         ui->list_container->show();
     }
 
-    // Adjust button icon sizes
-    button_responsive();
-}
-
-
-// Mouse double-click event handler for toggling fullscreen mode.
-
-void videowindow::mouseDoubleClickEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton)
+    if(ui->list_container->isVisible())
     {
-        if (ui->menu_container->isVisible())
-        {
-            // Enter fullscreen mode
-            toggleFullScreen(true);
-        }
-        else
-        {
-            // Exit fullscreen mode
-            toggleFullScreen(false);
+        QList<QPushButton*> buttons;
+        buttons.append(btn_file_op);
+        buttons.append(btn_back);
+        buttons.append(btn_forward);
+        buttons.append(btn_record);
+        buttons.append(FAQ);
+        buttons.append(btn_volume);
+        buttons.append(btn_play);
+        buttons.append(btn_next);
+        buttons.append(btn_last);
+        buttons.append(btn_screen_full);
+
+        const double iconSizeFactor = 0.05; // 调整图标大小的系数
+
+        for (QPushButton* button : buttons) {
+            QSize iconSize(this->width() * iconSizeFactor, this->width() * iconSizeFactor);
+            button->setIconSize(iconSize);
         }
     }
 
-    // Call the base class implementation to maintain other default behaviors
-    QWidget::mouseDoubleClickEvent(event);
+    // Resize the video playback area and control center
+    widget_item->resize(ui->play_container->size());
+    btn_list->resize(ui->menu_container->size());
+
+    // Resize and hide the playback queue
+    record_list->resize(this->width() * 0.33, this->height());
+    record_list->hide();
+}
+
+void videowindow::border_bar_init()
+{
+    initBorderVideoLabels();
+}
+
+void videowindow::initBorderVideoLabels()
+{
+    ui->statusbar->setStyleSheet("background-color: #60669B;"
+                                 " color: #ffffff;"
+                                 " font-family: Arial;"
+                                 " height: 12px;"
+                                 " font-weight: 500;");
+    bordervideo = new QLabel("Now：", ui->statusbar);
+    bordervideo->setStyleSheet("color:white;");
+    ui->statusbar->addWidget(bordervideo, 0);
+
+    bordervideopath = new QLabel("None", ui->statusbar);
+    ui->statusbar->addWidget(bordervideopath, 0);
 }
 
 void videowindow::toggleFullScreen(bool fullScreen)
@@ -1049,58 +1018,40 @@ void videowindow::toggleFullScreen(bool fullScreen)
     }
 }
 
-
-void videowindow::enterEvent(QEvent *event)
+// Mouse double-click event handler for toggling fullscreen mode.
+void videowindow::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    QWidget::enterEvent(event);
-}
-
-void videowindow::leaveEvent(QEvent *event)
-{
-    QWidget::leaveEvent(event);
+    if (event->button() == Qt::LeftButton)
+    {
+        if (ui->menu_container->isVisible())
+        {
+            // Enter fullscreen mode
+            toggleFullScreen(true);
+        }
+        else
+        {
+            // Exit fullscreen mode
+            toggleFullScreen(false);
+        }
+    }
 }
 
 void videowindow::mousePressEvent(QMouseEvent *event)
 {
-    if(!ishide)
+    if (ishide == false)
     {
-        Animation_setting->setStartValue(QRect(this->rect().width()-record_list->width(),0,record_list->width(),record_list->height()));
-        Animation_setting->setEndValue(QRect(this->rect().width(),0,record_list->width(),record_list->height()));
+        QRect startRect(this->rect().width() - record_list->width(), 0, record_list->width(), record_list->height());
+        QRect endRect(this->rect().width(), 0, record_list->width(), record_list->height());
+
+        Animation_setting->setStartValue(startRect);
+        Animation_setting->setEndValue(endRect);
+
+        Animation_setting->setDuration(500);
+
         Animation_setting->start();
+
         ishide = true;
     }
 }
-
-void videowindow::border_bar_init()
-{
-    initTimeLabel();
-    initBorderVideoLabels();
-}
-
-void videowindow::initTimeLabel()
-{
-    QLabel *timelabel = new QLabel("", ui->statusbar);
-    timelabel->setStyleSheet("font-family: Microsoft YaHei; font-size: 16px;");
-    QTimer *timer = new QTimer();
-    ui->statusbar->addPermanentWidget(timelabel, 0);
-    connect(timer, &QTimer::timeout, this, [=]() {
-        QDateTime currentDateTime = QDateTime::currentDateTime();
-        QString currentDateTimeString = currentDateTime.toString("  hh:mm:ss   \nyyyy/MM/dd   ");
-        timelabel->setText(currentDateTimeString);
-    });
-    timer->start(100);
-}
-
-void videowindow::initBorderVideoLabels()
-{
-    bordervideo = new QLabel("Playing：", ui->statusbar);
-    ui->statusbar->addWidget(bordervideo, 0);
-
-    bordervideopath = new QLabel("None", ui->statusbar);
-    ui->statusbar->addWidget(bordervideopath, 0);
-}
-
-
-
 
 
