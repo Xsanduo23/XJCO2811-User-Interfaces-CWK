@@ -10,14 +10,14 @@
 
 
 ### Introduction: 
-Our team's program is a video player based on qt5.15.2, which supports Windows/mac os, linux to play wmv/mp4, MOV format video. The interface of a video consists of a playarea, a menu and a playlist. Video functions include pause play, switch up and down video, fast forward and backward, volume adjustment, switch full screen, like function , switch language, playback speed adjustment, customize the interface background color, screenshot function, keyboard shortcut, FAQ  and etc. At the same time, the program interface meets the needs of adaptive, suitable for any screen size.
+Our team's program is a video player based on qt5.15.2, which supports Windows/Mac OS, Linux to play .wmv/.mp4, .MOV format video(Windows platforms can only play videos in .wmv format, while MacOS and Linux platforms can only play videos in .mp4 and .MOV formats). The interface of a video consists of a playarea, a menu, a playlist and a top tool bar. Video functions include  play pause, switch up and down video, fast forward and backward, volume adjustment, switch full screen, like function , switch language, video speed adjustment, customize the interface background color, screenshot function, keyboard shortcut, FAQ  and etc. At the same time, the program interface meets the needs of adaptive, suitable for any screen size.
 
 <div align="center">
 <img width="262" height="400" alt="image" src="https://github.com/LinZY37/XJCO2811-User-Interfaces-CWK/assets/126498872/18fc55c8-bbd5-46b7-86b9-4447d83efd03">
 </div>
 
 ### system requirement：
-+ Windows 10/11, macOS Linux
++ Windows 10/11, MacOS Linux
 + At least 4GB of RAM
 
 ### Functional guidance：
@@ -25,21 +25,21 @@ Our team's program is a video player based on qt5.15.2, which supports Windows/m
 <img width="700" height="70" alt="image" src="https://github.com/LinZY37/XJCO2811-User-Interfaces-CWK/assets/126498872/fe588974-3b92-421a-85bb-4796019994e1">
 </div>
 
-1. Play pause: Click the play button in the middle of the video to switch between play and pause. 
-2. Switch video: You can switch between the next and last video by clicking next and last next to the pause button, or you can click any video directly in the video list to play it. 
-3. Fast Forward and Back: Click the fast forward and back buttons next to Play Next and last to fast forward the video by two seconds. 
-4. Progress dragging: You can drag the video to any playback time by dragging the slider that shows the progress of the video playback.
+1. Play and pause: Click the play button in the middle of the video to switch between play and pause. 
+2. Switch video: You can switch between the next and last video by clicking button of next video and button of last video next to the play and pause button, or you can click any video directly in the video list to play it. 
+3. Fast Forward and Back: Click the fast forward and back buttons next to button of next video and button of last video to fast forward or back forward the video by two seconds. 
+4. Progress dragging: You can drag the video to any playback time by dragging the slider that shows the progress of the video.
 5. Volume adjustment: You can drag the volume slider in the menu bar to adjust the volume, or you can directly click the volume button to mute and unmute. 
 6. Switch to Full screen: Click the full screen button of the menu, and the video will be enlarged to full screen. After the full screen, click the button again to exit the full screen. 
 7. Viewing mode: Double-click the screen, you can enter the viewing mode. The viewing mode will not show any tool buttons, allowing the user to focus on watching the video. Double-click again to exit viewing mode. 
-8. Like button: In the playlist, you can directly click the small red heart button of each video. After clicking, you can see that the button changes color. Also, after selecting the fourth button in topbar which looks like '...', you can select the small red heart button to like the video.
+8. Like button: In the playlist, you can directly click the small red heart button of each video in playlist. After clicking, you can see that the button changes color. Also, after selecting the fourth button in topbar which looks like '...', you can select the small red heart button to like the video.
 
 <div align="center">
 <img width="500" height="90" alt="image" src="https://github.com/LinZY37/XJCO2811-User-Interfaces-CWK/assets/126498872/30a77114-c80d-458f-8d6d-45f51d967aa4">
 </div>
 
 8. Switch languages: Select the first button  in topbar which called 'language' to switch languages, realize the mutual switch between Chinese and English, and realize the internationalization of the program. 
-9. Playback speed adjustment: Select the second button in topbar which called 'speed' to select the speed at which the video plays, you can choose 0.5, 0.75, 1.0, 1.5 and 2.0 these speeds to plat the video.
+9. Video speed adjustment: Select the second button in topbar which called 'speed' to select the speed at which the video plays, you can choose 0.5, 0.75, 1.0, 1.5 and 2.0 these speeds to play the video.
 10. Customize the background: Select the third button in topbar which called 'UI color' to customize the background color to meet the different needs of all users. 
 11. Screenshot: After selecting the fourth button in topbar which looks like '...', you can select the screenshot function. After taking a screenshot, you can take a screenshot of the interface and save the picture to the local. 
 12. Video Preview: When the mouse moves over the playlist. The selected video will be shown in a small window to give viewers a preview of the effect. 
