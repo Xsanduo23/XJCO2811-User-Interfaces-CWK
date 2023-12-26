@@ -35,7 +35,7 @@ void videowindow:: upper_menu()
     menu_bar = new QMenuBar(this);
     this->setMenuBar(menu_bar);
     language_list = new QMenu("Language", menu_bar);
-    background_list = new QMenu("Background", menu_bar);
+    background_list = new QMenu("UI Interface", menu_bar);
     speed_list_item = new QMenu("Speed", menu_bar);
     speed_list = new QMenu("...", menu_bar);
 
@@ -46,7 +46,9 @@ void videowindow:: upper_menu()
     like = createAction("Like", this, QIcon(":/img/aixin.png"));
     picture = createAction("Screen Photo", this, QIcon(":/img/photo.png"));
     halfspeed = createAction("0.5 speed", this);
+    sevenfivespeed = createAction("0.75 speed", this);
     onespeed = createAction("1.0 speed", this);
+    onefivespeed = createAction("1.5 speed", this);
     twospeed = createAction("2.0 speed", this);
 
     // Add action to menu
@@ -64,7 +66,7 @@ void videowindow:: upper_menu()
         speed_list->addSeparator();
     }
 
-    QAction* speedItemActions[] = {halfspeed, onespeed, twospeed};
+    QAction* speedItemActions[] = {halfspeed, sevenfivespeed, onespeed, onefivespeed, twospeed};
     for (QAction *action : speedItemActions) {
         speed_list_item->addAction(action);
         speed_list_item->addSeparator();
@@ -118,6 +120,8 @@ void videowindow:: upper_menu_connections()
         bordervideo->setText("播放：");
         onespeed->setText("1倍速");
         halfspeed->setText("0.5倍速");
+        sevenfivespeed->setText("0.75倍速");
+        onefivespeed->setText("1.5倍速");
         twospeed->setText("2倍速");
         language_list->setTitle("语言");
         chinese->setText("中文（简体）");
@@ -135,6 +139,8 @@ void videowindow:: upper_menu_connections()
 
         bordervideo->setText("Playing：");
         onespeed->setText("1.0 speed");
+        sevenfivespeed->setText("0.75 speed");
+        onefivespeed->setText("1.5 speed");
         halfspeed->setText("0.5 speed");
         twospeed->setText("2.0 speed");
 
@@ -164,6 +170,12 @@ void videowindow:: upper_menu_connections()
     });
     connect(halfspeed,&QAction::triggered,this,[=](){
         play_area->setPlaybackRate(0.5);
+    });
+    connect(onefivespeed,&QAction::triggered,this,[=](){
+        play_area->setPlaybackRate(1.5);
+    });
+    connect(sevenfivespeed,&QAction::triggered,this,[=](){
+        play_area->setPlaybackRate(0.75);
     });
 
     connect(like, &QAction::triggered, this, [=]() {

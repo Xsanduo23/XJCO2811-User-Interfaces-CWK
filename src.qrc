@@ -2,7 +2,6 @@
     <qresource prefix="/">
         <file>img/photo.png</file>
         <file>img/send.png</file>
-        <file>music/start.wav</file>
         <file>img/logo.png</file>
         <file>img/24gf-volumeDisable.png</file>
         <file>img/24gf-volumeHigh.png</file>
@@ -21,5 +20,8 @@
         <file>img/wenjianjia.png</file>
         <file>img/zanting.png</file>
         <file>img/FAQ.png</file>
+        <file>music/Chinese.wav</file>
+        <file>music/English.wav</file>
+        <file>music/start.wav</file>
     </qresource>
 </RCC>

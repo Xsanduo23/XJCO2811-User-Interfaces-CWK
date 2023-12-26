@@ -1,13 +1,12 @@
 #ifndef VIDEOLIST_H
 #define VIDEOLIST_H
 
-#include <QTableWidget>
-#include <QWidget>
-#include <QIcon>
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
+#include <QTableWidget>
+#include <QWidget>
 #include <QVideoWidget>
-
+#include <QIcon>
 
 
 class video_list : public QTableWidget
@@ -16,7 +15,6 @@ class video_list : public QTableWidget
 public:
     // Set the table title
     void setTitle(QString header);
-
     explicit video_list(QWidget *parent = nullptr);
     // Initialize table settings
     void initializeTableSettings();
@@ -31,71 +29,63 @@ signals:
 namespace Ui {
 class list_widget;
 }
-class list_widget : public QWidget
-{
+
+class list_widget : public QWidget {
     Q_OBJECT
 
 public:
     explicit list_widget(QWidget *parent = nullptr);
     ~list_widget();
-    // Get text content
-    QString txt_catch();
-    // Set text content
-    void txt_setting(QString text);
-    // Set icon
-    void icon_setting(QIcon icon);
-    // Set the size of the favorite icon
-    void favorite_setting(QSize size);
-    // Toggle like status
-    void toggleLike();
-    // Play video
-    void playVideo();
-    // Get the X coordinate of the label
+
+    // Getters
     int Label_x() const;
-    // Set the X coordinate of the label
-    void x_setting(int X);
-
-    // Get the Y coordinate of the label
     int Label_y() const;
-    // Set the Y coordinate of the label
-    void y_setting(int Y);
 
-    // Check if liked
-    void is_like(QString name);
-    // Set the name
+     // Setters
+    void icon_setting(QIcon icon);
+    void favorite_setting(QSize size);
+    void x_setting(int X);
+    void y_setting(int Y);
     void name_setting(QString thisname);
+    void is_like(QString name);
+    QString txt_catch();
+    void txt_setting(QString text);
+
+
 
 protected:
-    // Handle resize events
-    void resizeEvent(QResizeEvent* event) override;
-    // Event filter
+    // Event Handlers
     bool eventFilter(QObject *object, QEvent *event) override;
-    // Mouse enter event
     void enterEvent(QEvent *event) override;
-    // Mouse leave event
     void leaveEvent(QEvent *event) override;
+    void resizeEvent(QResizeEvent* event) override;
+
 
 signals:
-    // Emit signal to add to favorites
+    // Signals
     void favorite_add();
-    // Emit signal to cancel favorites
     void favorite_cancel();
-    // Emit signal to play the video
     void video_play();
 
 private:
     Ui::list_widget *ui;
-    // Initialize the window
-    void initwindow();
 
-    int x, y;
+    // Private Members
+    int x;
+    int y;
     QIcon myicon;
 
-    // Mobile screen
-    QMediaPlayer *play_area = nullptr;           // Player
-    QMediaPlaylist *video_bar = nullptr;     // Playlist
-    QVideoWidget *widget_item = nullptr;           // Where to play the video
+    // Media Components
+    QVideoWidget *widget_item;      // Video Widget
+    QMediaPlayer *play_area;        // Player
+    QMediaPlaylist *video_bar;      // Playlist
     QString filepath;
+
+    // Actions
+    void toggleLike();
+    void playVideo();
+    void initwindow();
 };
+
 
 #endif // VIDEOLIST_H

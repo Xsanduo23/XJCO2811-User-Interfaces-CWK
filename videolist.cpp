@@ -4,7 +4,9 @@
 #include <QTimer>
 #include <QFile>
 #include <QHeaderView>
-video_list::video_list(QWidget *parent) : QTableWidget(parent) {
+#include <QFileInfo>
+video_list::video_list(QWidget *parent) :
+    QTableWidget(parent) {
     //Constructor for the 'video_list' class.
     //This constructor initializes an instance of the 'video_list' class with the given 'parent' widget.
     //It also calls the 'initializeTableSettings' method to set up the table's initial settings.
@@ -84,6 +86,21 @@ video_list::video_list(QWidget *parent) : QTableWidget(parent) {
 
 }
 
+list_widget::list_widget(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::list_widget)
+{
+    ui->setupUi(this);
+    initwindow();
+    this->setStyleSheet("background-color: transparent;");
+    ui->list_play_ui->hide();
+    ui->favorite_btn_ui->installEventFilter(this);
+    ui->favorite_btn_ui->setObjectName("unlike");
+
+    connect(ui->favorite_btn_ui, &QToolButton::clicked, this, &list_widget::toggleLike);
+    connect(ui->list_play_ui, &QToolButton::clicked, this, &list_widget::playVideo);
+}
+
 void video_list::initializeTableSettings() {
     // Initialize table settings for the 'video_list' class.
     // This method configures various properties of the table, including column count,
@@ -93,7 +110,7 @@ void video_list::initializeTableSettings() {
     setHorizontalHeaderLabels(QStringList() << "Play List");
     setSelectionBehavior(QAbstractItemView::SelectRows);
     horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    setMinimumSize(10, 10);
+    setMinimumSize(15, 10);
     verticalHeader()->setVisible(false);
     setContextMenuPolicy(Qt::CustomContextMenu);
     setMouseTracking(true);
@@ -110,27 +127,12 @@ void video_list::setTableStyles() {
     horizontalHeader()->setStyleSheet("background-color: transparent; color: red;");
 }
 
-
-
 void video_list::setTitle(QString headername) {
     QStringList headers;
     headers<<headername;
     this->setHorizontalHeaderLabels(headers);
 }
-list_widget::list_widget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::list_widget)
-{
-    ui->setupUi(this);
-    initwindow();
-    this->setStyleSheet("background-color: transparent;");
-    ui->list_play_ui->hide();
-    ui->favorite_btn_ui->installEventFilter(this);
-    ui->favorite_btn_ui->setObjectName("unlike");
 
-    connect(ui->favorite_btn_ui, &QToolButton::clicked, this, &list_widget::toggleLike);
-    connect(ui->list_play_ui, &QToolButton::clicked, this, &list_widget::playVideo);
-}
 void list_widget::enterEvent(QEvent *event)
 {
     // Enter event handler for the 'list_widget' class.
@@ -153,6 +155,7 @@ void list_widget::enterEvent(QEvent *event)
     // Start playing the video using the 'play_area'
     play_area->play();
 }
+
 void list_widget::toggleLike()
 {
     // Toggle the like status for the 'list_widget' class.
@@ -187,7 +190,6 @@ void list_widget::playVideo()
 {
     emit video_play();
 }
-
 
 bool list_widget::eventFilter(QObject *object, QEvent *event)
 {
@@ -231,6 +233,7 @@ bool list_widget::eventFilter(QObject *object, QEvent *event)
     // Pass the event to the base class
     return QWidget::eventFilter(object, event);
 }
+
 void list_widget::leaveEvent(QEvent *event)
 {
     // Leave event handler for the 'list_widget' class.
@@ -259,10 +262,12 @@ void list_widget::resizeEvent(QResizeEvent *event)
     widget_item->resize(ui->widget_show->size());
     widget_item->update();
 }
+
 void list_widget::is_like(QString name)
 {
     ui->favorite_btn_ui->setObjectName(name);
 }
+
 void list_widget::name_setting(QString thisname)
 {
     this->setObjectName(thisname);
@@ -277,26 +282,30 @@ QString list_widget::txt_catch()
 {
     return ui->list_info_ui->text();
 }
+
 void list_widget::txt_setting(QString text)
 {
     // Set text and video URL for the 'list_widget' class.
     // This method sets the text for the 'label' widget, sets the media URL for the 'play_area' (video player),
     // and initiates playback. It also calculates a new position for the video and sets it before pausing.
 
-    // Set the text of the 'label' widget
-    ui->list_info_ui->setText(text);
-
     // Set the media URL for the 'play_area' (video player)
     play_area->setMedia(QUrl(text));
+
+    // Set the text of the 'label' widget
+
+    QFileInfo fileInfo(text);
+    QString filename = fileInfo.fileName();
+    ui->list_info_ui->setText(filename);
 
     // Play the video
     play_area->play();
 
-    // Calculate a new position for the video (10% of the video duration)
-    qint64 newPosition = 0.1 * play_area->duration();
-
     // Pause the video playback
     play_area->pause();
+
+    // Calculate a new position for the video (10% of the video duration)
+    qint64 newPosition = 0.1 * play_area->duration();
 
     // Set the calculated position for the video
     play_area->setPosition(newPosition);
@@ -312,6 +321,7 @@ void list_widget::favorite_setting(QSize size)
 {
     ui->favorite_btn_ui->setIconSize(size);
 }
+
 void list_widget::initwindow()
 {
     // Initialize the window and media components for the 'list_widget' class.
@@ -331,20 +341,18 @@ void list_widget::initwindow()
     // Create a new QVideoWidget instance within the 'widget_show'
     widget_item = new QVideoWidget(ui->widget_show);
 
+    // Resize the video widget to match the size of 'widget_show'
+    widget_item->resize(ui->widget_show->size());
+
     // Set the playlist for the QMediaPlayer
     play_area->setPlaylist(video_bar);
 
     // Set the video output to the QVideoWidget
     play_area->setVideoOutput(widget_item);
 
-    // Resize the video widget to match the size of 'widget_show'
-    widget_item->resize(ui->widget_show->size());
-
     // Set the volume of the media player to 0 (mute)
     play_area->setVolume(0);
 }
-
-
 
 int list_widget::Label_y() const
 {
