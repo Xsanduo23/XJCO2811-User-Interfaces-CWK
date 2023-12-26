@@ -35,7 +35,7 @@ void videowindow:: upper_menu()
     menu_bar = new QMenuBar(this);
     this->setMenuBar(menu_bar);
     language_list = new QMenu("Language", menu_bar);
-    background_list = new QMenu("UI Interface", menu_bar);
+    background_list = new QMenu("UI color", menu_bar);
     speed_list_item = new QMenu("Speed", menu_bar);
     speed_list = new QMenu("...", menu_bar);
 
@@ -134,7 +134,7 @@ void videowindow:: upper_menu_connections()
     connect(english,&QAction::triggered,this,[=](){
         list->setTitle("Play List");
         speed_list_item->setTitle("Speed");
-        background_list->setTitle("UI interface");
+        background_list->setTitle("UI color");
         custom->setText("choose");
 
         bordervideo->setText("Playing：");

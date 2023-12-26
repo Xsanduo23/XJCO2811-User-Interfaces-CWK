@@ -925,7 +925,7 @@ void videowindow::get_data(QString path)
         video_bar->setCurrentIndex(currentIndex);
     } else {
         addMediaAndSetCurrentIndex(path);
-        updateStatusBar(path);
+        updatewindow_bottom(path);
         add_data(path);
     }
 }
@@ -951,7 +951,7 @@ void videowindow::addMediaAndSetCurrentIndex(const QString& path)
     video_bar->setCurrentIndex(video_bar->mediaCount() - 1);
 }
 
-void videowindow::updateStatusBar(const QString& path)
+void videowindow::updatewindow_bottom(const QString& path)
 {
     bordervideopath->setText(QString("%1").arg(path));
 }
@@ -1078,17 +1078,17 @@ void videowindow::border_bar_init()
 
 void videowindow::initBorderVideoLabels()
 {
-    ui->statusbar->setStyleSheet("background-color: #60669B;"
+    ui->window_bottom->setStyleSheet("background-color: #60669B;"
                                  " color: #ffffff;"
                                  " font-family: Arial;"
                                  " height: 12px;"
                                  " font-weight: 500;");
-    bordervideo = new QLabel("Now：", ui->statusbar);
+    bordervideo = new QLabel("Now：", ui->window_bottom);
     bordervideo->setStyleSheet("color:white;");
-    ui->statusbar->addWidget(bordervideo, 0);
+    ui->window_bottom->addWidget(bordervideo, 0);
 
-    bordervideopath = new QLabel("None", ui->statusbar);
-    ui->statusbar->addWidget(bordervideopath, 0);
+    bordervideopath = new QLabel("None", ui->window_bottom);
+    ui->window_bottom->addWidget(bordervideopath, 0);
 }
 
 void videowindow::toggleFullScreen(bool fullScreen)

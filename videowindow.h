@@ -9,7 +9,6 @@
 #include <QPropertyAnimation>
 #include <QMouseEvent>
 #include <QMenuBar>
-#include <QStatusBar>
 #include <QWidget>
 #include <QMainWindow>
 #include <QMediaPlayer>
@@ -91,7 +90,7 @@ private:
     void handleCellDoubleClick(int i, int j);
     int findMediaIndex(const QString &path);
     void addMediaAndSetCurrentIndex(const QString &path);
-    void updateStatusBar(const QString &path);
+    void updatewindow_bottom(const QString &path);
     list_widget *createListWidget(const QString &name, int row);
     void connectItemSignals(list_widget *item);
     void get_url(const QString &directory);
