@@ -3,14 +3,14 @@
 <div align="center">
    <h3 >-XJCO2811-User-Interfaces-CWK-</h3>
 </div>
-<img src="img/logo.png" style="zoom:50%;" />
+<div style="text-align:center;">   <img src="img/logo.png" style="zoom:22%;" /> </div>
 
 
 
 ### Introduction: 
 Our team's program is a video player based on qt5.15.2, which supports Windows/Mac OS, Linux to play .wmv/.mp4, .MOV format video(Windows platforms can only play videos in .wmv format, while MacOS and Linux platforms can only play videos in .mp4 and .MOV formats). The interface of a video consists of a playarea, a menu, a playlist and a top tool bar. Video functions include  play pause, switch up and down video, fast forward and backward, volume adjustment, switch full screen, like function , switch language, video speed adjustment, customize the interface background color, screenshot function, keyboard shortcut, FAQ  and etc. At the same time, the program interface meets the needs of adaptive, suitable for any screen size.
 
-<img src="img/overview.jpg" style="zoom:50%;" />
+<div style="display: flex; justify-content: center;">   <img src="img/overview.jpg" style="zoom: 33%;" /> </div>
 
 
 ### system requirement：
@@ -18,7 +18,7 @@ Our team's program is a video player based on qt5.15.2, which supports Windows/M
 + At least 4GB of RAM
 
 ### Functional guidance：
-![](img/toolbuttons.png)
+<div style="text-align:center;">   <img src="img/toolbuttons.png"" /> </div>
 
 
 1. Play and pause: Click the play button in the middle of the video to switch between play and pause. 
@@ -30,7 +30,7 @@ Our team's program is a video player based on qt5.15.2, which supports Windows/M
 7. Viewing mode: Double-click the screen, you can enter the viewing mode. The viewing mode will not show any tool buttons, allowing the user to focus on watching the video. Double-click again to exit viewing mode. 
 8. Like button: In the playlist, you can directly click the small red heart button of each video in playlist. After clicking, you can see that the button changes color. Also, after selecting the fourth button in topbar which looks like '...', you can select the small red heart button to like the video.
 
-![](img/toolbar.jpg)
+<div style="text-align:center;">   <img src="img/toolbar.jpg"" /> </div>
 
 
 8. Switch languages: Select the first button  in topbar which called 'language' to switch languages, realize the mutual switch between Chinese and English, and realize the internationalization of the program. 
