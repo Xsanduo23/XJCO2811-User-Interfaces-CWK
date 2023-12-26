@@ -3,27 +3,23 @@
 <div align="center">
    <h3 >-XJCO2811-User-Interfaces-CWK-</h3>
 </div>
+<img src="img/logo.png" style="zoom:50%;" />
 
-<div align="center">
-<img src="https://github.com/LinZY37/XJCO2811-User-Interfaces-CWK/assets/126498872/9edd932a-d6ec-438d-84db-5ad69c1d2e79" width="500" height="300">
-</div>
 
 
 ### Introduction: 
 Our team's program is a video player based on qt5.15.2, which supports Windows/Mac OS, Linux to play .wmv/.mp4, .MOV format video(Windows platforms can only play videos in .wmv format, while MacOS and Linux platforms can only play videos in .mp4 and .MOV formats). The interface of a video consists of a playarea, a menu, a playlist and a top tool bar. Video functions include  play pause, switch up and down video, fast forward and backward, volume adjustment, switch full screen, like function , switch language, video speed adjustment, customize the interface background color, screenshot function, keyboard shortcut, FAQ  and etc. At the same time, the program interface meets the needs of adaptive, suitable for any screen size.
 
-<div align="center">
-<img width="262" height="400" alt="image" src="https://github.com/LinZY37/XJCO2811-User-Interfaces-CWK/assets/126498872/18fc55c8-bbd5-46b7-86b9-4447d83efd03">
-</div>
+<img src="img/overview.jpg" style="zoom:50%;" />
+
 
 ### system requirement：
 + Windows 10/11, MacOS Linux
 + At least 4GB of RAM
 
 ### Functional guidance：
-<div align="center">
-<img width="700" height="70" alt="image" src="https://github.com/LinZY37/XJCO2811-User-Interfaces-CWK/assets/126498872/fe588974-3b92-421a-85bb-4796019994e1">
-</div>
+![](img/toolbuttons.png)
+
 
 1. Play and pause: Click the play button in the middle of the video to switch between play and pause. 
 2. Switch video: You can switch between the next and last video by clicking button of next video and button of last video next to the play and pause button, or you can click any video directly in the video list to play it. 
@@ -34,9 +30,8 @@ Our team's program is a video player based on qt5.15.2, which supports Windows/M
 7. Viewing mode: Double-click the screen, you can enter the viewing mode. The viewing mode will not show any tool buttons, allowing the user to focus on watching the video. Double-click again to exit viewing mode. 
 8. Like button: In the playlist, you can directly click the small red heart button of each video in playlist. After clicking, you can see that the button changes color. Also, after selecting the fourth button in topbar which looks like '...', you can select the small red heart button to like the video.
 
-<div align="center">
-<img width="500" height="90" alt="image" src="https://github.com/LinZY37/XJCO2811-User-Interfaces-CWK/assets/126498872/30a77114-c80d-458f-8d6d-45f51d967aa4">
-</div>
+![](img/toolbar.jpg)
+
 
 8. Switch languages: Select the first button  in topbar which called 'language' to switch languages, realize the mutual switch between Chinese and English, and realize the internationalization of the program. 
 9. Video speed adjustment: Select the second button in topbar which called 'speed' to select the speed at which the video plays, you can choose 0.5, 0.75, 1.0, 1.5 and 2.0 these speeds to play the video.
