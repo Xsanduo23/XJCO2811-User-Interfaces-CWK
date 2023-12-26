@@ -47,7 +47,7 @@ Our team's program is a video player based on qt5.15.2, which supports Windows/M
 11. Screenshot: After selecting the fourth button in topbar which looks like '...', you can select the screenshot function. After taking a screenshot, you can take a screenshot of the interface and save the picture to the local. 
 12. Video Preview: When the mouse moves over the playlist. The selected video will be shown in a small window to give viewers a preview of the effect. 
 13. Responsive: The program is designed to fit any size. When the interface is too wide, the playlist will move from the bottom to the right, click the list button on the far right of the menu, and the playlist will pop up from the right, which is to adapt to the tablet size.
-14. Keyboard shortcut: The space bar corresponds to the play and pause of the video, the left and right keys correspond to the back and forward of the video playback, and the up and down keys correspond to the increase and decrease of the video volume key.
+14. Keyboard shortcut: The space bar corresponds to the play and pause of the video, the left and right keys correspond to the back and forward of the video playback, and the up and down keys correspond to the increase and decrease of the video volume key. One thing to note is that after you click play on a video in your playlist, you'll have to click on the area above your playlist to get the keyboard shortcuts focused.
 15. FAQ: After clicking a button similar to a question mark, a window will pop up to show the introduction of our player in both Chinese and English. There are three buttons to play the Chinese sound and pause it.
 
 ### How to run the player
