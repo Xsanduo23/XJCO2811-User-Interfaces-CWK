@@ -10,7 +10,7 @@
 
 
 ### Introduction: 
-Our team's program is a video player based on qt5.15.2, which supports Windows/mac os, linux to play wmv/mp4, MOV format video. The interface of a video consists of a playarea, a menu and a playlist. Video functions include pause play, fast forward and backward, switch up and down video, sound adjustment, switch full screen, double speed playback, like, screenshot, customize the interface background color, switch language. At the same time, the program interface meets the needs of adaptive, suitable for any screen size.
+Our team's program is a video player based on qt5.15.2, which supports Windows/mac os, linux to play wmv/mp4, MOV format video. The interface of a video consists of a playarea, a menu and a playlist. Video functions include pause play, fast forward and backward, switch up and down video, sound adjustment, switch full screen, double speed playback, like, screenshot, customize the interface background color, switch language, keyboard shortcut. At the same time, the program interface meets the needs of adaptive, suitable for any screen size.
 
 <div align="center">
 <img width="262" height="400" alt="image" src="https://github.com/LinZY37/XJCO2811-User-Interfaces-CWK/assets/126498872/18fc55c8-bbd5-46b7-86b9-4447d83efd03">
@@ -43,11 +43,13 @@ Our team's program is a video player based on qt5.15.2, which supports Windows/m
 11. Screenshot: After selecting the fourth button in topbar, you can select the screenshot function. After taking a screenshot, you can take a screenshot of the interface and save the picture to the local. 
 12. Video Preview: When the mouse moves over the playlist. The selected video will be shown in a small window to give viewers a preview of the effect. 
 13. Responsive: The program is designed to fit any size. When the interface is too wide, the playlist will move from the bottom to the right, click the list button on the far right of the menu, and the playlist will pop up from the right, which is to adapt to the tablet size.
+14. Keyboard shortcut: The space bar corresponds to the play and pause of the video, the left and right keys correspond to the back and forward of the video playback, and the up and down keys correspond to the increase and decrease of the video volume key.
 
 ### How to run
 
-- Download the zip file of the entire project, unzip and open the zip file.
+- Download the .zip file of the entire project, unzip the .zip file.
 - Download the QT Creator IDE and QT 5.15.2 from the QT website.
 - Complete the QT 5.15.2 configuration in QT Creator(consider setting some initial internationalisation language options here).
 - Open the project and open the.pro file in the folder to build the project.
-- Click the Play button, and you'll get the software running.
+- Click the Run button, and you'll get the software running.
+- Click the button with the folder icon and select the folder containing the video files. You should see all the videos in the folder appear in the playlist. Click the play button next to any video to play it.
